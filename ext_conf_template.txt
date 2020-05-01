@@ -1,0 +1,2 @@
+# cat=basic//; type=options[.edgerc file in project root folder=edgerc,Environment variables=env]; label=Choose how Akamai authentication credentials are retrieved:
+configType = env
