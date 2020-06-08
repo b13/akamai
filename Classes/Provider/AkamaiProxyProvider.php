@@ -26,7 +26,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class AkamaiProxyProvider implements ProxyProviderInterface
 {
     /**
-     * @var AkamaiApi
+     * @var AkamaiApi|bool|null
      */
     protected $api;
 
@@ -81,10 +81,10 @@ class AkamaiProxyProvider implements ProxyProviderInterface
 
     protected function isActive(): bool
     {
-        if (!$this->api === null) {
+        if ($this->api === null) {
             $this->api = $this->getAkamaiApi() ?? false;
         }
-        return $this->api !== null;
+        return $this->api !== false;
     }
 
     protected function getAkamaiApi($section = 'default'): ?AkamaiApi
