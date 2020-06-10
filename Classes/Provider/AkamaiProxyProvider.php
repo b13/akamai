@@ -40,12 +40,18 @@ class AkamaiProxyProvider implements ProxyProviderInterface
         if (!$this->isActive()) {
             return;
         }
+        if (empty($urls)) {
+            return;
+        }
         $this->api->invalidateUrl($url);
     }
 
     public function flushCacheForUrls(array $urls)
     {
         if (!$this->isActive()) {
+            return;
+        }
+        if (empty($urls)) {
             return;
         }
         $this->api->invalidateUrls($urls);
