@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace B13\Akamai;
 
 use Akamai\Open\EdgeGrid\Client;
+use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Core\Environment;
 
@@ -55,17 +56,27 @@ class AkamaiApi
 
     public function invalidateUrls(array $urls): ResponseInterface
     {
-        return $this->client->post(
-            '/ccu/v3/invalidate/url/' . $this->network,
-            ['json' => ['objects' => array_values($urls)]]
-        );
+        try {
+            return $this->client->post(
+                '/ccu/v3/invalidate/url/' . $this->network,
+                ['json' => ['objects' => array_values($urls)]]
+            );
+        } catch (ClientException $e) {
+            // Fail silently
+            // This usually happens if there are other domains / zones triggered which should not be flushed
+        }
     }
 
     public function invalidateByCpCode(string $cpCode): ResponseInterface
     {
-        return $this->client->post(
-            '/ccu/v3/invalidate/cpcode/' . $this->network,
-            ['json' => ['objects' => [$cpCode]]]
-        );
+        try {
+            return $this->client->post(
+                '/ccu/v3/invalidate/cpcode/' . $this->network,
+                ['json' => ['objects' => [$cpCode]]]
+            );
+        } catch (ClientException $e) {
+            // Fail silently
+            // This usually happens if there are other domains / zones triggered which should not be flushed
+        }
     }
 }
