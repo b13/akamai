@@ -5,7 +5,7 @@
 	"keywords": ["typo3", "cdn", "akamai", "cache", "purge"],
 	"license": "GPL-2.0-or-later",
     "require": {
-        "typo3/cms-core": "^9.5 || ^10.0",
+        "typo3/cms-core": "^9.5 || ^10.0 || ^11.0",
         "akamai-open/edgegrid-client": "^1.0"
     },
     "extra": {
