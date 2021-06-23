@@ -102,7 +102,7 @@ class PurgeCommand extends Command
             );
             return 1;
         }
-        if ($response->getStatusCode() < 300) {
+        if ($response && $response->getStatusCode() < 300) {
             if (!$io->isQuiet()) {
                 $io->success('Done - status code ' . $response->getStatusCode());
                 if ($output->isVerbose()) {
@@ -114,7 +114,7 @@ class PurgeCommand extends Command
             $io->error(
                 [
                     'An error occurred while purging caches',
-                    (string)$response->getBody()->getContents()
+                    $response ? (string)$response->getBody()->getContents() : ''
                 ]
             );
             return 1;

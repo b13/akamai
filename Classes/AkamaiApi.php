@@ -49,12 +49,12 @@ class AkamaiApi
         $this->network = $network;
     }
 
-    public function invalidateUrl(string $url): ResponseInterface
+    public function invalidateUrl(string $url): ?ResponseInterface
     {
         return $this->invalidateUrls([$url]);
     }
 
-    public function invalidateUrls(array $urls): ResponseInterface
+    public function invalidateUrls(array $urls): ?ResponseInterface
     {
         try {
             return $this->client->post(
@@ -62,12 +62,13 @@ class AkamaiApi
                 ['json' => ['objects' => array_values($urls)]]
             );
         } catch (ClientException $e) {
+            return null;
             // Fail silently
             // This usually happens if there are other domains / zones triggered which should not be flushed
         }
     }
 
-    public function invalidateByCpCode(string $cpCode): ResponseInterface
+    public function invalidateByCpCode(string $cpCode): ?ResponseInterface
     {
         try {
             return $this->client->post(
@@ -75,6 +76,7 @@ class AkamaiApi
                 ['json' => ['objects' => [$cpCode]]]
             );
         } catch (ClientException $e) {
+            return null;
             // Fail silently
             // This usually happens if there are other domains / zones triggered which should not be flushed
         }
