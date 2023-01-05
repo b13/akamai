@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  B13\Akamai\:
+    resource: '../Classes/*'
+
+  B13\Akamai\Command\PurgeCommand:
+    tags:
+      - name: 'console.command'
+        command: 'akamai:purge'
+        schedulable: true

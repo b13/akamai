@@ -65,7 +65,7 @@ class PurgeCommand extends Command
             );
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $client = AkamaiClientFactory::create(GeneralUtility::makeInstance(ExtensionConfiguration::class));

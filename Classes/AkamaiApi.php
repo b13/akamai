@@ -21,15 +21,8 @@ use TYPO3\CMS\Core\Core\Environment;
  */
 class AkamaiApi
 {
-    /**
-     * @var string
-     */
-    protected $network = 'staging';
-
-    /**
-     * @var Client
-     */
-    protected $client;
+    protected string $network = 'staging';
+    protected Client $client;
 
     public function __construct(Client $client)
     {
