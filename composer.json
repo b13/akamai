@@ -17,6 +17,9 @@
     "suggest": {
         "b13/proxycachemanager": "Proxy Cache Manager Extension to provide integration into TYPO3s Backend Cache Flush methods"
     },
+    "conflict": {
+        "b13/proxycachemanager": "<4.0"
+    },
     "autoload": {
         "psr-4": {
             "B13\\Akamai\\": "Classes/"
