@@ -14,6 +14,7 @@ namespace B13\Akamai\Provider;
 use B13\Akamai\AkamaiClientFactory;
 use B13\Akamai\AkamaiApi;
 use B13\Proxycachemanager\Provider\ProxyProviderInterface;
+use Psr\Http\Message\RequestInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -30,23 +31,12 @@ class AkamaiProxyProvider implements ProxyProviderInterface
      */
     protected $api;
 
-    public function setProxyEndpoints($endpoints)
+    public function shouldRequestBeMarkedAsCached(RequestInterface $request): bool
     {
-        // Not needed
+        return true;
     }
 
-    public function flushCacheForUrl($url)
-    {
-        if (!$this->isActive()) {
-            return;
-        }
-        if (empty($urls)) {
-            return;
-        }
-        $this->api->invalidateUrl($url);
-    }
-
-    public function flushCacheForUrls(array $urls)
+    public function flushCacheForUrls(array $urls): void
     {
         if (!$this->isActive()) {
             return;
@@ -57,7 +47,7 @@ class AkamaiProxyProvider implements ProxyProviderInterface
         $this->api->invalidateUrls($urls);
     }
 
-    public function flushAllUrls($urls = [])
+    public function flushAllUrls($urls = []): void
     {
         if (!$this->isActive()) {
             return;
@@ -85,7 +75,7 @@ class AkamaiProxyProvider implements ProxyProviderInterface
         }
     }
 
-    protected function isActive(): bool
+    public function isActive(): bool
     {
         if ($this->api === null) {
             $this->api = $this->getAkamaiApi() ?? false;
